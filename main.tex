@@ -1,0 +1,175 @@
+%-------------------------------------------------------------------------------
+\documentclass[10pt,b6paper,book,tate,oneside,linegap=2pt]{jlreq}
+% jlreq best class for typesetting Japanese in LaTeX using  pTeX/upTeX/LuaTex
+%-------------------------------------------------------------------------------
+% lltjp-geometry provided by luatexja project should not be used with horizontal
+% writing classes and it should be loaded before geometry.sty as follows:-------
+\usepackage{lltjp-geometry}
+\usepackage[
+top=0.75cm,
+bottom=0.5cm,
+left=.75cm,
+right=0.75cm
+]{geometry}
+
+\usepackage{lltjext}
+
+% use Japanese otf/ttf fonts in LuaTex engin -----------------------------------
+\usepackage[match]{luatexja-fontspec}
+\setmainjfont{A-OTF-KyokaICAPro-Regular.otf}
+
+% use \ruby[m]{kanji}{ka|na} to set ruby----------------------------------------
+\usepackage{pxrubrica}
+\rubyfontsetup{\mcfamily}
+% rmfamily -> mcfamily (mincho) and sffamily -> gtfamily (gothic)
+% luatexja-fontspec [match] option allows this notation 
+
+
+% use color in document --------------------------------------------------------
+\usepackage{xcolor}
+\definecolor{myred}{rgb}{0.85,0,0.1}
+
+% use jlreq builtin setting for heading and footing ----------------------------
+\NewPageStyle{mystyle}{
+tate,
+nombre           =,
+}
+\pagestyle{mystyle}% Set page style
+
+% define color box frame -------------------------------------------------------
+\usepackage[raster]{tcolorbox}
+%\newtcbox{\cmd}[args][default]{options}
+\newtcbox{\fcbox}[1][red]{
+    on line, 
+    arc       = 5pt, 
+    fontupper = \sffamily,
+    colback   = #1!20!white, 
+    colframe  = #1!90!black, 
+    coltext   = #1!90!black,
+    boxrule   = 0.5pt, 
+    boxsep    = 0pt, 
+    left=1pt,right=1pt,top=1pt,bottom=1pt
+}
+\newtcbox{\kbox}[1][]{
+    capture  = minipage, % let adjust width
+    on line, arc       = 0pt, 
+    fontupper = \fontsize{6\zw}{6\zw}\selectfont\rmfamily,
+    colback   = white, 
+    colframe  = black, 
+    coltext   = black,
+    boxrule   = 1pt, 
+    boxsep    = 0pt, 
+    width     = 8\zw,
+    height    = 8\zw,
+    halign    = center,
+    valign    = center,
+    left=1pt,right=1pt,top=1pt,bottom=1pt
+}
+\newtcolorbox{onkun}[1][]{
+    on line, arc = 0 pt, center title,
+    fontupper= \fontsize{1\zw}{1\zw}\selectfont\rmfamily,
+    colback  = white,
+    coltext  = black,
+    colframe = black,
+    boxrule  = 1pt, 
+    width    = 8\zw,
+    height   = 8\zw,
+    halign   = left,
+    valign   = top,
+    top      = 0pt,
+    left     = 0pt,
+    right    = 0pt,
+    bottom   = 0pt,
+    #1
+}
+\newtcolorbox{bushu}[1][]{
+    capture  = minipage, % let adjust width
+    on line, arc = 0 pt, center title,
+    title         = ぶしゅ,
+    fonttitle     = \fontsize{0.75\zw}{0.75\zw}\selectfont\sffamily,
+    colbacktitle  = white,
+    coltitle      = black,
+    fontupper   = \fontsize{2\zw}{2\zw}\selectfont\rmfamily,
+    fontlower   = \fontsize{1\zw}{1\zw}\selectfont\rmfamily,
+    colback     = white,
+    coltext     = black,
+    colframe = black,
+    boxrule  = 1pt, 
+    width    = 5\zw,
+    height   = 8\zw,
+    halign   = center,
+    valign   = center,
+    top      = 0pt,
+    left     = 0pt,
+    right    = 0pt,
+    bottom   = 0pt,
+}
+% define kanji command ---------------------------------------------------------
+%\kanji{KanJi}{on\\kun}{stroke}{radical}{radical-name}{KanJi-meaning}
+\newcommand{\kanjii}[6]{
+    \begin{tcbraster}[
+        raster column skip=1pt,
+        raster row skip  =1pt, 
+        raster force size=false, 
+        raster columns=4, raster rows=1]
+        \kbox{#1}
+        \begin{onkun}
+            \par \vspace{6\zw} \hspace{1\zw} 
+            \fcbox{\rmfamily\tatechuyoko{#3}画}
+            \par
+            \vspace{-7.5\zw}#2
+        \end{onkun} 
+        \begin{bushu}
+            #4 \tcblower \center #5
+        \end{bushu}
+        \fcbox{\rmfamily\tatechuyoko{#6}}
+    \end{tcbraster}
+}
+% use multi-column environment (> 2) -------------------------------------------
+\usepackage{multicol}
+\setlength{\parindent}{0mm}
+\setlength{\columnsep}{2\zw}
+\setlength{\columnseprule}{0.5pt} 
+
+%-------------------------------------------------------------------------------
+\begin{document}
+\begin{multicols}{2}   
+
+\kanjii{回}{カイ\\エ\\まわ.す\\まわ.る}{6}{囗}{くにがまえ}{turn round, time}
+\begin{tabular}{ll}
+\ruby[m]{人道回廊}{じん|どう|かい|ろう} & humanitarian corridor \\
+回復（かいふく）   & recovery \\ 
+回送（かいそう）   & forwarding \\
+先回（せんかい）   & last time \\ 
+前回（ぜんかい）   & last time \\
+\end{tabular}
+
+\kanjii{主}{シュ\\ス\\おも.な\\ぬし}{5}{丶}{てん}{main, master}
+\begin{tabular}{ll}
+主婦（しゅふ）   & housewife \\   
+主語（しゅご）   & subject (grammar) \\
+主体（しゅたい） & subject (philosophy) \\
+主義（しゅぎ）   & set of principles, -ism \\
+主に（おもに）   & mainly \\
+\end{tabular}
+ 
+\kanjii{色}{ショク\\シキ\\いろ}{6}{色}{いろ}{color}
+\begin{tabular}{ll}
+三色（さんしょく）     & three-color \\
+柿色（かきいろ）       & persimmon-color \\
+栗色（くりいろ）       & maroon-color \\ 
+琥珀色（こはくいろ）    & amber-color \\
+群青色（ぐんじょういろ） & ultramarine blue \\
+\end{tabular}
+
+\kanjii{形}{ケイ\\ギョウ\\かた\\かたち}{7}{彡}{さんづくり}{shape, form}
+\begin{tabular}{ll}
+形容詞（けいようし）    & adjective  \\
+変形する（へんけいする） & transform \\
+形見（かたみ）         & memento   \\
+手形（てがた）         & draft  \\
+卵形（たまごがた）      & oval \\
+\end{tabular}
+
+\end{multicols}
+\end{document}

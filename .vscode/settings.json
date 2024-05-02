@@ -1,0 +1,39 @@
+{
+    "latex-workshop.latex.tools": [
+        {
+        "name": "lualatex",
+        "command": "lualatex",
+        "args": [
+            "-synctex=1",
+            "-interaction=nonstopmode",
+            "-file-line-error",
+            "-pdf",
+            "%DOC%"
+        ],
+        "env": {}
+        },
+    ],
+
+    "latex-workshop.latex.recipes": [
+        {
+            "name": "lualatex",
+            "tools": [
+                "lualatex"
+            ]
+        },
+    ],
+
+
+    "cSpell.languageSettings": [
+        {
+            "languageId": "latex",
+            "patterns": [
+                {
+                    "name": "LaTexMacrosMultiLine",
+                    "pattern": "\\\\(?!(?:title|color|section|subsection|footnote|chapter|part|caption|emph|text|entry))\\w+(?:\\[[^]*?\\]|\\{[^]*?\\})*",
+                    "description": "Match against all LaTex Macros"
+                }
+            ]
+        }
+    ]
+}
